@@ -1,8 +1,9 @@
 
 import {z} from 'zod'
 import { SlotType } from '../../../../libs/Network/src/gql/generated'
-import { useForm } from 'react-hook-form'
+import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { ReactNode } from 'react'
 
 export const formSchemaAddress=z.object({
     lat:z.number(),
@@ -34,5 +35,15 @@ export const useFormCreateGarage=()=>useForm<FormTypeCreateGarage>({
     resolver:zodResolver(formSchemaCreateGarage),
     defaultValues:{slotTypes:[]},
 })
+
+
+export const FormProviderCreateGarage = ({
+    children,
+  }: {
+    children: ReactNode
+  }) => {
+    const methods = useFormCreateGarage()
+    return <FormProvider {...methods}>{children}</FormProvider>
+  }
 
 
